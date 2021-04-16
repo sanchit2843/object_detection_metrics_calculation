@@ -1,8 +1,8 @@
 import os
-from coco_evaluator import get_coco_summary
-from bounding_box import BoundingBox
+from src.coco_evaluator import get_coco_summary
+from src.bounding_box import BoundingBox
 import argparse
-from enumerators import CoordinatesType, BBType, BBFormat
+from src.enumerators import CoordinatesType, BBType, BBFormat
 import pandas as pd
 import math
 import numpy as np
