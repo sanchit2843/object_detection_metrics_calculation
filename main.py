@@ -14,9 +14,9 @@ if __name__ == "__main__":
         "--path_to_results",
         "-p",
         type=str,
-        default="./result_evaluations",
-        required=True,
-        help="Location of current config file",
+        default="./example_result_folder",
+        required=False,
+        help="Path to result folder in structure defined in readme",
     )
 
     args = parser.parse_args()
