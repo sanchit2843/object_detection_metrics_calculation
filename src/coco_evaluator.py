@@ -19,7 +19,7 @@
 from collections import defaultdict
 
 import numpy as np
-from bounding_box import BBFormat
+from src.bounding_box import BBFormat
 
 
 def get_coco_summary(groundtruth_bbs, detected_bbs):

@@ -1,6 +1,6 @@
 from math import isclose
 
-from enumerators import BBFormat, BBType, CoordinatesType
+from src.enumerators import BBFormat, BBType, CoordinatesType
 
 
 def convert_to_relative_values(size, box):

@@ -85,7 +85,7 @@ if __name__ == "__main__":
     all_image_metrics = get_coco_summary(all_gt_boxes, all_detection_boxes)
 
     image_metrics_list = ["all_images"]
-    for _, v in image_metrics.items():
+    for _, v in all_image_metrics.items():
         if math.isnan(v):
             image_metrics_list.append(-1)
             continue
