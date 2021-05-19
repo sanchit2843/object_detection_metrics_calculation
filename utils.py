@@ -1,4 +1,5 @@
 import os
+import cv2
 
 
 def write_txt(gt, pred, decoder, image_name):
@@ -25,6 +26,7 @@ def write_txt(gt, pred, decoder, image_name):
 
     f_gt = open("./result_evaluation/groundtruths/{}.txt".format(image_name), "w+")
     f_pred = open("./result_evaluation/detections/{}.txt".format(image_name), "w+")
+
     for b, c in zip(gt_boxes, gt_classes):
 
         f_gt.write(
@@ -35,3 +37,27 @@ def write_txt(gt, pred, decoder, image_name):
         f_pred.write(
             "{} {} {} {} {} {}\n".format(decoder[c], s, b[0], b[1], b[2], b[3])
         )
+
+#plot groundtruth boxes and detection with class name from result evaluation folder
+def plot_from_txt(result_path, image_path, plot_folder="./"):
+
+    for i in os.listdir(image_path):
+        image = cv2.imread(os.path.join(image_path, i))
+        groundtruth_boxes = open(
+            os.path.join(
+                result_path,
+                "groundtruths",
+                i.replace("png", "txt").replace("jpg", "txt"),
+            ),
+            "r",
+        )
+        detection_boxes = open(
+            os.path.join(
+                result_path,
+                "groundtruths",
+                i.replace("png", "txt").replace("jpg", "txt"),
+            ),
+            "r",
+        )
+
+        for b in groundtruth_boxes:

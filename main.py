@@ -6,29 +6,16 @@ from src.enumerators import CoordinatesType, BBType, BBFormat
 import pandas as pd
 import math
 import numpy as np
+from tqdm import tqdm
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
 
-    parser.add_argument(
-        "--path_to_results",
-        "-p",
-        type=str,
-        default="./example_result_folder",
-        required=False,
-        help="Path to result folder in structure defined in readme",
-    )
-
-    args = parser.parse_args()
+def get_coco_metrics_from_path(path_to_results):
     all_gt_boxes = []
     all_detection_boxes = []
     each_image_metrics = []
-
-    for i in os.listdir(os.path.join(args.path_to_results, "groundtruths")):
-        gt_txt_file = open(os.path.join(args.path_to_results, "groundtruths", i), "r")
-        detection_txt_file = open(
-            os.path.join(args.path_to_results, "detections", i), "r"
-        )
+    for i in tqdm(os.listdir(os.path.join(path_to_results, "groundtruths"))):
+        gt_txt_file = open(os.path.join(path_to_results, "groundtruths", i), "r")
+        detection_txt_file = open(os.path.join(path_to_results, "detections", i), "r")
         gt_boxes = []
         detected_boxes = []
 
@@ -84,7 +71,28 @@ if __name__ == "__main__":
 
     all_image_metrics = get_coco_summary(all_gt_boxes, all_detection_boxes)
 
+    return each_image_metrics, all_image_metrics
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--path_to_results",
+        "-p",
+        type=str,
+        default="./example_result_folder",
+        required=False,
+        help="Path to result folder in structure defined in readme",
+    )
+
+    args = parser.parse_args()
+
+    each_image_metrics, all_image_metrics = get_coco_metrics_from_path(
+        args.path_to_results
+    )
     image_metrics_list = ["all_images"]
+
     for _, v in all_image_metrics.items():
         if math.isnan(v):
             image_metrics_list.append(-1)
