@@ -4,7 +4,7 @@
 ## Introduction
 This repository consists of code to calculate coco style object detection metrics per image and mean for all images, a specific format is used for passing the ground truths and detections which is refered in [usage](##Usage) section. This code outputs a csv file for each image and final row will contain averaged score for each metric.  
 
-The path to results will consist of two folders, groundtruths, detections and image folder to get image sizes. The groundtruths contain txt files in same format as yolov5 training and e detections contains txt files in the same format as received from detect.py script in yolov5. 
+The path to results will consist of two folders, groundtruths, detections and image folder(only png supported) to get image sizes. The groundtruths contain txt files in same format as yolov5 training and e detections contains txt files in the same format as received from detect.py script in yolov5. 
 
 ## Object detection scores covered. 
 - AP
@@ -27,7 +27,7 @@ You can also refer to utils.py to get code to convert bounding box predictions t
 python main.py -p path_to_results
 ```
 ### Format for path to results:
-This folder should contain two subfolders with names groundtruths, detections and images folder to read image size as the boxes are in relative format. These two folders should contain text file for each image.
+This folder should contain two subfolders with names groundtruths, detections and images folder(only png supported) to read image size as the boxes are in relative format. These two folders should contain text file for each image.
 
 ### Ground truth text file format
 For each image ground truth text file will be in format "[class] [center_x] [center_y] [width] [height]\n". 
