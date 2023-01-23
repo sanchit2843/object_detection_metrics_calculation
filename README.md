@@ -2,7 +2,9 @@
 
 
 ## Introduction
-This repository consists of code to calculate coco style object detection metrics per image and mean for all images, a specific format is used for passing the ground truths and detections which is refered in [usage](##Usage) section. This code outputs a csv file for each image and final row will contain averaged score for each metric.   
+This repository consists of code to calculate coco style object detection metrics per image and mean for all images, a specific format is used for passing the ground truths and detections which is refered in [usage](##Usage) section. This code outputs a csv file for each image and final row will contain averaged score for each metric.  
+
+The path to results will consist of two folders, groundtruths and detections. The groundtruths contain txt files in same format as yolov5 training and e detections contains txt files in the same format as received from detect.py script in yolov5. 
 
 ## Object detection scores covered. 
 - AP
@@ -28,12 +30,12 @@ python main.py -p path_to_results
 This folder should contain two subfolders with names groundtruths and detections. These two folders should contain text file for each image.
 
 ### Ground truth text file format
-For each image ground truth text file will be in format "[class] [left] [top] [width] [height]\n". 
+For each image ground truth text file will be in format "[class] [center_x] [center_y] [width] [height]\n". 
 Each value will be absolute and class can be given as a string. 
 
 ### Detection text file format
 
-For each image detection text file will be in format "[class] [confidence score] [left] [top] [right] [bottom]\n". 
+For each image detection text file will be in format "[class] [confidence score] [center_x] [center_y] [width] [height]\n". 
 Each value will be absolute and class can be given as a string.
 
 ## Output format
