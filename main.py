@@ -8,6 +8,7 @@ import math
 import numpy as np
 from tqdm import tqdm
 import cv2
+import imagesize
 
 
 def get_coco_metrics_from_path(ground_truth_path, detection_path, image_path):
@@ -16,16 +17,12 @@ def get_coco_metrics_from_path(ground_truth_path, detection_path, image_path):
     each_image_metrics = []
     for i in tqdm(os.listdir(ground_truth_path)):
         gt_txt_file = open(os.path.join(ground_truth_path, i), "r")
-        if os.path.exists(os.path.join(image_path, i.replace("txt", "png"))):
-            h, w, _ = cv2.imread(
-                os.path.join(image_path, i.replace("txt", "png"))
-            ).shape
-        else:
-            h, w, _ = cv2.imread(
-                os.path.join(image_path, i.replace("txt", "PNG"))
-            ).shape
         gt_boxes = []
         detected_boxes = []
+        if os.path.exists(os.path.join(image_path, i.replace("txt", "png"))):
+            w, h = imagesize.get(os.path.join(image_path, i.replace("txt", "png")))
+        elif os.path.exists(os.path.join(image_path, i.replace("txt", "PNG"))):
+            w, h = imagesize.get(os.path.join(image_path, i.replace("txt", "PNG")))
 
         for current_line in gt_txt_file.readlines():
             current_line = current_line.split(" ")
@@ -42,7 +39,6 @@ def get_coco_metrics_from_path(ground_truth_path, detection_path, image_path):
                     bb_type=BBType.GROUND_TRUTH,
                     confidence=None,
                     format=BBFormat.YOLO,
-                    type_coordinates=CoordinatesType.RELATIVE,
                     img_size=(w, h),
                 )
             )
@@ -65,7 +61,6 @@ def get_coco_metrics_from_path(ground_truth_path, detection_path, image_path):
                         confidence=float(current_line[5]),
                         format=BBFormat.YOLO,
                         img_size=(w, h),
-                        type_coordinates=CoordinatesType.RELATIVE,
                     )
                 )
         all_gt_boxes += gt_boxes
@@ -81,9 +76,8 @@ def get_coco_metrics_from_path(ground_truth_path, detection_path, image_path):
         # each_image_metrics.append(np.array(image_metrics_list))
 
     all_image_metrics = get_coco_summary(all_gt_boxes, all_detection_boxes)
-    print(all_image_metrics)
-    a = get_coco_metrics(all_gt_boxes, all_detection_boxes)
-
+    # a = get_coco_metrics(all_gt_boxes, all_detection_boxes)
+    # breakpoint()
     return each_image_metrics, all_image_metrics
 
 
@@ -138,3 +132,4 @@ if __name__ == "__main__":
 
     # print("object detection coco metrics for all images")
     # print(all_image_metrics)
+
